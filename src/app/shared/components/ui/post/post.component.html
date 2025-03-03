@@ -1,1 +1,27 @@
-<p>post works!</p>
+<div class="post md:w-[70%] mx-auto bg-white p-10 my-10 rounded-lg shadow-md">
+
+  <div class="post__hedaer flex items-center justify-between">
+
+    <div class="flex items-center gap-3">
+      <img class="w-12 h-12" [src]="post?.user?.photo" alt="profile">
+      <div>
+        <h3>{{post?.user?.name}} </h3>
+        <h4> {{post?.createdAt | date : "medium"}} </h4>
+      </div>
+    </div>
+
+    <div class="post__header__icon">
+      <i class="fas fa-ellipsis-h cursor-pointer"></i>
+    </div>
+
+  </div>
+
+  <div class="post__body mt-5">
+    <p class="text-lg"> {{post?.body}} </p>
+
+      <div class="post__img mt-5">
+        <img class="w-full  object-cover rounded-lg" [src]="post?.image" [alt]="post?.body">
+      </div>
+  </div>
+
+</div>
