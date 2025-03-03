@@ -9,8 +9,12 @@ module.exports = {
       colors: {
         main: '#193CB8',
         body_color: '#EEEEEE',
+      },
+      container : {
+        center: true
       }
-    },
+    }
+
   },
   plugins: [
     require('flowbite/plugin') ,

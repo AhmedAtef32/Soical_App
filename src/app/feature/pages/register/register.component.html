@@ -1,1 +1,189 @@
-<p>register works!</p>
+<section class="mt-8">
+  <div class="container">
+    <div class="md:w-[75%] mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div class="flex items-center  gap-3">
+        <div class="pulser"></div>
+        <h1 class="text-3xl text-main font-bold"> Register Now :</h1>
+      </div>
+
+      <form [formGroup]="registerForm" (ngSubmit)="submitRegisterForm()" class="mt-8">
+
+        <div class="relative z-0 mt-6">
+          <input formControlName="name" name="name" id="name" type="text" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+          <label for="name" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">User Name</label>
+          @let userName = registerForm.get("name");
+          @if (userName?.errors && userName?.touched) {
+            <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+              <span class="sr-only">Danger</span>
+              <div>
+                  <ul class=" list-disc list-inside">
+
+                    @if(userName?.getError("required") && userName?.touched) {
+                      <li>user name is requird</li>
+
+                    }@else if (userName?.getError("minlength") && userName?.touched) {
+                      <li>user name less than 3 character</li>
+                    }@else if (userName?.getError("maxlength") && userName?.touched) {
+                      <li>user name greater than 20 character</li>
+                    }
+
+                </ul>
+              </div>
+            </div>
+          }
+
+      </div>
+
+
+      <div class="relative z-0 mt-6">
+        <input formControlName="email" name="email" id="email" type="email" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+        <label for="email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
+
+        @let eamil = registerForm.get("email");
+        @if (eamil?.errors && eamil?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+                <ul class=" list-disc list-inside">
+
+                  @if(eamil?.getError("required") && eamil?.touched) {
+                    <li>Email is requird</li>
+
+                  }@else if (eamil?.getError("email") && eamil?.touched) {
+                    <li>Email is not vaild must be like L6i9d&#64;example.com</li>
+                  }
+
+              </ul>
+            </div>
+          </div>
+        }
+
+
+      </div>
+
+
+    <div class="relative z-0 mt-6">
+      <input formControlName="password" name="password" id="password" type="password" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+      <label for="password" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Password</label>
+
+      @let password = registerForm.get("password");
+      @if (password?.errors && password?.touched) {
+        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+          <span class="sr-only">Danger</span>
+          <div>
+              <ul class=" list-disc list-inside">
+
+                @if(password?.getError("required") && password?.touched) {
+                  <li>Password is requird</li>
+
+                }@else if (password?.getError("pattern") && password?.touched) {
+                  <li>Password is not vaild must be like Ahmed&#64;123</li>
+                }
+
+            </ul>
+          </div>
+        </div>
+      }
+
+    </div>
+
+  <div class="relative z-0 mt-6">
+    <input formControlName="rePassword" name="rePassword" id="rePassword" type="Password" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+    <label for="rePassword" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">rePassword</label>
+
+    @let rePassword = registerForm.get("rePassword");
+    @if (rePassword?.errors && rePassword?.touched) {
+      <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+        <span class="sr-only">Danger</span>
+        <div>
+            <ul class=" list-disc list-inside">
+
+              @if(rePassword?.getError("required") && rePassword?.touched) {
+                <li>rePassword is requird</li>
+
+              }
+          </ul>
+        </div>
+      </div>
+    }
+
+    @if(registerForm?.getError("notMatch")&& rePassword?.touched) {
+      <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+        <span class="sr-only">Danger</span>
+        <div>
+            <ul class=" list-disc list-inside">
+              <li>password and rePassword not match</li>
+          </ul>
+        </div>
+      </div>
+    }
+  </div>
+
+<div class="relative z-0 mt-6">
+  <input formControlName="dateOfBirth" name="dateOfBirth" id="dateOfBirth" type="date" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+  <label for="dateOfBirth" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Date</label>
+
+  @let dateOfBirth = registerForm.get("dateOfBirth");
+  @if (dateOfBirth?.errors && dateOfBirth?.touched) {
+    <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <span class="sr-only">Danger</span>
+      <div>
+          <ul class=" list-disc list-inside">
+
+            @if(dateOfBirth?.getError("required") && dateOfBirth?.touched) {
+              <li>Date Of Birth is requird</li>
+
+            }
+        </ul>
+      </div>
+    </div>
+  }
+
+</div>
+
+
+<div class="flex gap-3 items-center mt-6">
+
+
+<div class="flex items-center mb-4">
+  <input id="male" type="radio" name="gender" formControlName="gender" value="male"  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+  <label for="male" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Male</label>
+</div>
+
+<div class="flex items-center mb-4">
+  <input id="female" type="radio" name="gender" formControlName="gender" value="female"  class="w-4 h-4 cursor-pointer text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+  <label for="female" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Female</label>
+</div>
+
+@let gender = registerForm.get("gender");
+  @if (gender?.errors && gender?.touched) {
+    <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <span class="sr-only">Danger</span>
+      <div>
+          <ul class=" list-disc list-inside">
+
+            @if(gender?.getError("required") && gender?.touched) {
+              <li>Gender is requird</li>
+
+            }
+        </ul>
+      </div>
+    </div>
+  }
+
+</div>
+
+<div class="relative mt-4">
+  <button [disabled]="isCallApi" type="submit" class="px-4 py-2 text-white bg-main rounded-md">
+    Sign Up
+    @if (isCallApi) {
+
+      <i class="fa fa-spin fa-spinner"></i>
+    }
+  </button>
+</div>
+      </form>
+    </div>
+
+  </div>
+</section>

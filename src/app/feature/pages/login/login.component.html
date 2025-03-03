@@ -1,1 +1,80 @@
-<p>login works!</p>
+<section class="mt-8">
+  <div class="container">
+    <div class="md:w-[75%] mx-auto bg-white p-8 rounded-lg shadow-lg">
+      <div class="flex items-center  gap-3">
+        <div class="pulser"></div>
+        <h1 class="text-3xl text-main font-bold"> Login Now :</h1>
+      </div>
+
+      <form [formGroup]="loginForm" (ngSubmit)="submitloginForm()" class="mt-8">
+
+
+
+      <div class="relative z-0 mt-6">
+        <input formControlName="email" name="email" id="email" type="email" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+        <label for="email" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Email</label>
+
+        @let eamil = loginForm.get("email");
+        @if (eamil?.errors && eamil?.touched) {
+          <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+            <span class="sr-only">Danger</span>
+            <div>
+                <ul class=" list-disc list-inside">
+
+                  @if(eamil?.getError("required") && eamil?.touched) {
+                    <li>Email is requird</li>
+
+                  }@else if (eamil?.getError("email") && eamil?.touched) {
+                    <li>Email is not vaild must be like L6i9d&#64;example.com</li>
+                  }
+
+              </ul>
+            </div>
+          </div>
+        }
+
+
+      </div>
+
+
+    <div class="relative z-0 mt-6">
+      <input formControlName="password" name="password" id="password" type="password" id="floating_standard" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " />
+      <label for="password" class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">Password</label>
+
+      @let password = loginForm.get("password");
+      @if (password?.errors && password?.touched) {
+        <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+          <span class="sr-only">Danger</span>
+          <div>
+              <ul class=" list-disc list-inside">
+
+                @if(password?.getError("required") && password?.touched) {
+                  <li>Password is requird</li>
+
+                }@else if (password?.getError("pattern") && password?.touched) {
+                  <li>Password is not vaild must be like Ahmed&#64;123</li>
+                }
+
+            </ul>
+          </div>
+        </div>
+      }
+
+    </div>
+
+
+
+<div class="relative mt-4">
+  <button [disabled]="isCallApi" type="submit" class="px-4 py-2 text-white bg-main rounded-md">
+    Sign In
+    @if (isCallApi) {
+
+      <i class="fa fa-spin fa-spinner"></i>
+    }
+  </button>
+</div>
+      </form>
+    </div>
+
+  </div>
+</section>

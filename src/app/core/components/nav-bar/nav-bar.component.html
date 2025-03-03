@@ -13,17 +13,34 @@
     </button>
     <div class="hidden w-full md:block md:w-auto" id="navbar-solid-bg">
       <ul class="flex flex-col font-medium mt-4 md:items-center rounded-lg bg-white md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-gray-800 md:dark:bg-transparent dark:border-gray-700">
-        <li>
-          <img class="w-12 h-12 rounded-full" src="images/profile.png" alt="profile">
-        </li>
 
-        <li>
-          <a class="font-bold" routerLink="/login" routerLinkActive="!text-main">Login</a>
-        </li>
+        @if(islogged){
 
-        <li>
-          <a  class="font-bold" routerLink="/register" routerLinkActive="!text-main">Register</a>
-        </li>
+
+          <li>
+            <a class="font-bold" routerLink="/home" routerLinkActive="!text-main">Home</a>
+          </li>
+
+
+          <li>
+            <a role="button" (click)="signOut()" class="font-bold text-[red]" >Sign OUt</a>
+          </li>
+
+          <li>
+            <img class="w-12 h-12 rounded-full" [src]="userData?.photo" alt="profile">
+          </li>
+        }@else{
+          <li>
+            <a class="font-bold" routerLink="/login" routerLinkActive="!text-main">Login</a>
+          </li>
+
+          <li>
+            <a  class="font-bold" routerLink="/register" routerLinkActive="!text-main">Register</a>
+          </li>
+        }
+
+
+
 
       </ul>
     </div>

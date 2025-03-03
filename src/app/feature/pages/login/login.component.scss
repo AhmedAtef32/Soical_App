@@ -1,0 +1,36 @@
+.pulser {
+  width: 30px;
+  height: 30px;
+  background: #193CB8;
+  border-radius: 50%;
+  position: relative;
+  &::after {
+    content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: #193CB8;
+  border-radius: 50%;
+  z-index: 5;
+    animation: run 2s cubic-bezier(0.9, 0.7, 0.5, 0.9) infinite;
+  }
+  @keyframes run {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      transform: scale(1.4);
+      opacity: 0.4;
+    }
+  }
+
+}
+
+
+
+
+
+
+
