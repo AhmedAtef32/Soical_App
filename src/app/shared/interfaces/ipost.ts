@@ -21,6 +21,7 @@ export interface Comment {
   commentCreator: CommentCreator
   post: string
   createdAt: string
+
 }
 
 export interface CommentCreator {

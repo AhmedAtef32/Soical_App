@@ -22,6 +22,7 @@ ngOnInit(): void {
   if (isPlatformBrowser(this.pLATFORM_ID)) {
     if(localStorage.getItem("userToken")){
       this.getUserData();
+      this.authService.getUserDataFromToken()
     }
   }
 

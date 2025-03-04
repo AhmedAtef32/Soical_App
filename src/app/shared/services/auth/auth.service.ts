@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import {  inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Enviroments } from '../../../core/enviroments/enviroments';
 import { IuserData } from '../../interfaces/iuser-data';
 import { Router } from '@angular/router';
-
+import { jwtDecode } from "jwt-decode";
+import { IuserInfo } from '../../interfaces/iuser-info';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,6 +16,7 @@ export class AuthService {
   private readonly _router= inject(Router)
 
   userData!: IuserData | null
+  userID:BehaviorSubject<string> = new BehaviorSubject("");
   signUp(data:object):Observable<any>{
     return this.httpClient.post(`${Enviroments.baseUrl}/users/signup`,data)
   }
@@ -31,4 +33,10 @@ export class AuthService {
     this.userData = null
     this._router.navigate(['/login']);
   }
+
+  getUserDataFromToken(){
+   const userInfo:IuserInfo =jwtDecode(localStorage.getItem("userToken")!);
+   this.userID.next(userInfo.user)
+  }
+  
 }
