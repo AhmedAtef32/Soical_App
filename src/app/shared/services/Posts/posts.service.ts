@@ -20,4 +20,9 @@ export class PostsService {
   creatPost(data:FormData):Observable<any>{
     return this.httopclinet.post(`${Enviroments.baseUrl}/posts`,data)
   }
+
+  // get single Post
+  getSinglePost(id:string):Observable<any>{
+    return this.httopclinet.get(`${Enviroments.baseUrl}/posts/${id}`)
+  }
 }

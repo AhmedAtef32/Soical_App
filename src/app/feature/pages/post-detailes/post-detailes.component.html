@@ -1,1 +1,191 @@
-<p>post-detailes works!</p>
+@if (isCalingApiPost) {
+  <div role="status"
+  class="md:w-[60%] mx-auto p-4 border border-gray-200 rounded-sm shadow-sm animate-pulse md:p-6 dark:border-gray-700 my-3">
+  <div class="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded-sm dark:bg-gray-700">
+    <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor" viewBox="0 0 16 20">
+      <path
+        d="M14.066 0H7v5a2 2 0 0 1-2 2H0v11a1.97 1.97 0 0 0 1.934 2h12.132A1.97 1.97 0 0 0 16 18V2a1.97 1.97 0 0 0-1.934-2ZM10.5 6a1.5 1.5 0 1 1 0 2.999A1.5 1.5 0 0 1 10.5 6Zm2.221 10.515a1 1 0 0 1-.858.485h-8a1 1 0 0 1-.9-1.43L5.6 10.039a.978.978 0 0 1 .936-.57 1 1 0 0 1 .9.632l1.181 2.981.541-1a.945.945 0 0 1 .883-.522 1 1 0 0 1 .879.529l1.832 3.438a1 1 0 0 1-.031.988Z" />
+      <path d="M5 5V.13a2.96 2.96 0 0 0-1.293.749L.879 3.707A2.98 2.98 0 0 0 .13 5H5Z" />
+    </svg>
+  </div>
+  <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4"></div>
+  <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+  <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700 mb-2.5"></div>
+  <div class="h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+  <div class="flex items-center mt-4">
+    <svg class="w-10 h-10 me-3 text-gray-200 dark:text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor" viewBox="0 0 20 20">
+      <path
+        d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z" />
+    </svg>
+    <div>
+      <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-2"></div>
+      <div class="w-48 h-2 bg-gray-200 rounded-full dark:bg-gray-700"></div>
+    </div>
+  </div>
+  <span class="sr-only">Loading...</span>
+</div>
+}@else{
+  <div class="post md:w-[60%] mx-auto bg-white p-10 my-10 rounded-lg shadow-md">
+
+    <div class="post__hedaer flex items-center justify-between">
+
+      <div class="flex items-center gap-3">
+        <img class="w-12 h-12" [src]="post?.user?.photo" alt="profile">
+        <div>
+          <h3>{{post?.user?.name}} </h3>
+          <h4> {{post?.createdAt | date : "medium"}} </h4>
+        </div>
+      </div>
+
+      <div class="post__header__icon">
+        @if(post?.user?._id == userID){
+
+          <i class="fas fa-ellipsis-h cursor-pointer"></i>
+        }
+      </div>
+
+    </div>
+
+    <div class="post__body mt-5">
+      <p class="text-lg"> {{post?.body}} </p>
+
+        <div class="post__img mt-5 cursor-pointer"  >
+          <img class="w-full  object-cover rounded-lg" [src]="post.image ? post?.image : 'images/Route.png'" [alt]="post?.body">
+        </div>
+
+        <a #ShowMore role="button" class="block my-5 text-main"> Show More Comments</a>
+
+        <div  class="post__comments bg-body_color p-4 rounded-lg max-h-[300px]  overflow-y-auto ">
+
+          @defer (on interaction(ShowMore)) {
+            @for (comment of post.comments; track $index; let index = $index ) {
+              <div class="comment__item border-b-2 border-gray-200 pb-4 mb-4">
+
+                <!-- comment header  -->
+                <div class="flex items-center justify-between">
+                  <div class="comment flex items-center gap-3 p-2 ">
+                    <img class="w-10 h-10 rounded-full" src="images/profile.png" alt="profile">
+                    <div class="flex gap-3">
+                      <h3 class="text-main"> {{comment.commentCreator?.name}} </h3>
+                      <p>{{comment.createdAt |date : "medium" }} </p>
+                    </div>
+                  </div>
+                  <div class="comment__icon relative">
+                    @if(userID == comment.commentCreator._id){
+
+                      <button (click)="toogelIconeMune(iconMune)"  class="text-black " type="button">
+                        <i class="fas fa-ellipsis-h cursor-pointer"></i>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div #iconMune  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-6 right-3">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+                              <li>
+                                <a  role="button" (click)="toogelIconeMune(iconMune)" (click)="editComment(comment._id ,comment,index )"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                              </li>
+                              <li>
+                                <a role="button"  (click)="deletecomment(comment._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
+                              </li>
+
+                            </ul>
+                        </div>
+
+                    }
+                  </div>
+
+                <!-- comment body  -->
+
+                 </div>
+                 <div class="comment__body ">
+                   <p class="text-lg text-gray-500"> {{comment?.content }} </p>
+                 </div>
+              </div>
+             }
+          }@placeholder {
+
+            <div class="comment__item border-b-2 border-gray-200 pb-4 mb-4">
+              <!-- comment header  -->
+                <div class="flex items-center justify-between">
+                  <div class="comment flex items-center gap-3 p-2 ">
+                    <img class="w-10 h-10 rounded-full" src=" images/profile.png" alt="profile">
+                    <div class="flex gap-3">
+                      <h3 class="text-main"> {{post.comments[0]?.commentCreator?.name}} </h3>
+                      <p>{{post.comments[0]?.createdAt |date : "medium" }} </p>
+                    </div>
+                  </div>
+                  <div class="comment__icon relative">
+                    @if(userID == post.comments[0]?.commentCreator?._id){
+
+
+
+
+
+                      <button (click)="toogelIconeMune(iconMune)"  class="text-black " type="button">
+                        <i class="fas fa-ellipsis-h cursor-pointer"></i>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div #iconMune  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-6 right-3">
+                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+                              <li>
+                                <a  role="button" (click)="toogelIconeMune(iconMune)" (click)="editComment(post.comments[0]._id , post.comments[0] , 0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                              </li>
+                              <li>
+                                <a role="button"  (click)="deletecomment(post.comments[0]._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
+                              </li>
+
+                            </ul>
+                        </div>
+
+
+                    }
+                               <!-- comment body  -->
+                  </div>
+                 </div>
+                 <div class="comment__body ">
+                   <p class="text-lg text-gray-500"> {{post.comments[0]?.content }} </p>
+                 </div>
+              </div>
+          }
+
+
+        </div>
+
+
+
+
+
+  @if (isUpdating) {
+    <form [formGroup]="updateForm">
+      <div class="flex items-center gap-3 mt-5 ">
+        <input formControlName="content" type="text" class="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-main" placeholder="Add a comment">
+        @if (isCailngApi) {
+          <i class="fa fa-spin fa-spinner text-main right-3 text-lg"></i>
+        }@else {
+
+          <i (click)="postOrUpdateComment(commentData , post._id)" class="fa-solid fa-paper-plane  text-main right-3 text-lg cursor-pointer"></i>
+        }
+      </div>
+    </form>
+
+  }@else {
+    <div class="flex items-center gap-3 mt-5 ">
+      <input [(ngModel)]="commentData" type="text" class="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-main" placeholder="Add a comment">
+      @if (isCailngApi) {
+        <i class="fa fa-spin fa-spinner text-main right-3 text-lg"></i>
+      }@else {
+
+        <i (click)="postOrUpdateComment(commentData , post._id)" class="fa-solid fa-paper-plane  text-main right-3 text-lg cursor-pointer"></i>
+      }
+    </div>
+  }
+
+
+
+    </div>
+
+  </div>
+
+}

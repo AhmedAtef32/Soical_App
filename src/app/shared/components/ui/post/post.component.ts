@@ -5,10 +5,11 @@ import { AuthService } from '../../../services/auth/auth.service';
 import { CommentsService } from '../../../services/comments.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-post',
-  imports: [DatePipe ,FormsModule , ReactiveFormsModule],
+  imports: [DatePipe ,FormsModule , ReactiveFormsModule, RouterLink],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
@@ -30,7 +31,7 @@ export class PostComponent implements OnInit  {
   isUpdating: boolean = false
   updateCommentID!:string
   commentIindex!:number
-  
+
   ngOnInit(): void {
     if(isPlatformBrowser(this._pLATFORM_ID)){
       this._authService.userID.subscribe({
@@ -42,17 +43,18 @@ export class PostComponent implements OnInit  {
 
   }
 
+  // Update Comment
   updateForm:FormGroup = new FormGroup({
     content : new FormControl(null)
   })
 
-  getData(){
-    this.showComments = !this.showComments
-    this.comments = this.post.comments
-  }
 
 
-  postOrUpdateComment(data:string,postID:string){
+/**
+*this function for post if isUpdating = false or update comment if isUpdating = true
+*
+ */
+postOrUpdateComment(data:string,postID:string){
     this.isCailngApi = true ;
 
     if (this.isUpdating) {
@@ -88,12 +90,13 @@ export class PostComponent implements OnInit  {
 
   }
 
-  pathVaild(comment:any){
-    this.comments = this.post.comments
-    console.log(comment)
-  }
 
-  deletePost(commentID:string){
+
+
+   /**
+    *  this function for delete comment
+    */
+  deletecomment(commentID:string){
     this._commentsService.deleteComment(commentID).subscribe({
       next: (res)=>{
         console.log(res)
@@ -101,6 +104,16 @@ export class PostComponent implements OnInit  {
     })
   }
 
+
+
+  /**
+   * @description
+   * This function takes an id of comment that will be updated , comment object and index of comment in the comments array of post
+   * and make the comment form ready to update the comment
+   * @param id {string} - id of comment
+   * @param comment {Comment} - comment object
+   * @param index {number} - index of comment in the comments array of post
+   */
   editComment(id:string,comment:Comment,index:number){
     this.isUpdating = true
     this.updateCommentID = id
@@ -112,6 +125,14 @@ export class PostComponent implements OnInit  {
 
   }
 
+
+
+
+  /**
+   * Toggle the 'hidden' class on the given HTMLElement.
+   * This function is used to toogle the post menu (the three dots)
+   * @param list {HTMLElement} - the HTMLElement that will be toggled
+   */
   toogelIconeMune(list:HTMLElement){
     list.classList.toggle('hidden')
   }
