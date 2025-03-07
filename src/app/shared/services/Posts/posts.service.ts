@@ -11,7 +11,13 @@ export class PostsService {
   constructor(private httopclinet : HttpClient) { }
 
 
+  //get all posts
   getAllposts(page:number):Observable<any>{
     return this.httopclinet.get(`${Enviroments.baseUrl}/posts?limit=2&page=${page}`)
+  }
+
+  // Create Post
+  creatPost(data:FormData):Observable<any>{
+    return this.httopclinet.post(`${Enviroments.baseUrl}/posts`,data)
   }
 }
