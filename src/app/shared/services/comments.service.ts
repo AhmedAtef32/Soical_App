@@ -19,6 +19,10 @@ export class CommentsService {
     )
   }
 
+  UpdateComment(content:object ,commentID:string):Observable<any>{
+    return this.httpClient.put(`${Enviroments.baseUrl}/comments/${commentID}`,content)
+  }
+
   deleteComment(commentID:string):Observable<any>{
     return this.httpClient.delete(`${Enviroments.baseUrl}/comments/${commentID}`)
   }

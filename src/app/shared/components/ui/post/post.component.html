@@ -26,24 +26,27 @@
         <img class="w-full  object-cover rounded-lg" [src]="post.image ? post?.image : 'images/Route.png'" [alt]="post?.body">
       </div>
 
-      <a (click)="getData()" role="button" class="block my-5 text-main"> Show More Comments</a>
+      <a #ShowMore role="button" class="block my-5 text-main"> Show More Comments</a>
 
-      <div [class]="{'overflow-y-scroll' : showComments}" class="post__comments bg-body_color p-4 rounded-lg h-[130px]">
+      <div  class="post__comments bg-body_color p-4 rounded-lg max-h-[300px]  overflow-y-auto ">
 
-        @if(showComments){
-
-          @for(comment of comments.slice(0,5); track $index){
+        @defer (on interaction(ShowMore)) {
+          @for (comment of post.comments; track $index; let index = $index ) {
             <div class="comment__item border-b-2 border-gray-200 pb-4 mb-4">
               <div class="flex items-center justify-between">
                 <div class="comment flex items-center gap-3 p-2 ">
                   <img class="w-10 h-10 rounded-full" src="images/profile.png" alt="profile">
                   <div class="flex gap-3">
-                    <h3 class="text-main"> {{comment?.commentCreator?.name}} </h3>
-                    <p>{{comment?.createdAt |date : "medium" }} </p>
+                    <h3 class="text-main"> {{comment.commentCreator?.name}} </h3>
+                    <p>{{comment.createdAt |date : "medium" }} </p>
                   </div>
                 </div>
-                <div class="comment__icon">
+                <div class="comment__icon relative">
                   @if(userID == comment.commentCreator._id){
+
+
+
+
 
                     <button (click)="toogelIconeMune(iconMune)"  class="text-black " type="button">
                       <i class="fas fa-ellipsis-h cursor-pointer"></i>
@@ -53,14 +56,16 @@
                       <div #iconMune  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-6 right-3">
                           <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
                             <li>
-                              <a  role="button" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                              <a  role="button" (click)="toogelIconeMune(iconMune)" (click)="editComment(comment._id ,comment,index )"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                             </li>
                             <li>
-                              <a role="button" (click)="deletePost(comment._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
+                              <a role="button"  (click)="deletePost(comment._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
                             </li>
 
                           </ul>
                       </div>
+
+
                   }
                 </div>
                </div>
@@ -68,52 +73,55 @@
                  <p class="text-lg text-gray-500"> {{comment?.content }} </p>
                </div>
             </div>
-          }
+           }
+        }@placeholder {
 
-
-        }@else {
-          <div class="comment__item border-b-2 border-gray-200 pb-4 mb-4">
-            <div class="flex items-center justify-between">
-              <div class="comment flex items-center gap-3 p-2 ">
-                <img class="w-10 h-10 rounded-full" src="images/profile.png" alt="profile">
-                <div class="flex gap-3">
-                  <h3 class="text-main"> {{post.comments[0]?.commentCreator?.name}} </h3>
-                  <p>{{post.comments[0]?.createdAt |date : "medium" }} </p>
+           <div class="comment__item border-b-2 border-gray-200 pb-4 mb-4">
+              <div class="flex items-center justify-between">
+                <div class="comment flex items-center gap-3 p-2 ">
+                  <img class="w-10 h-10 rounded-full" src=" images/profile.png" alt="profile">
+                  <div class="flex gap-3">
+                    <h3 class="text-main"> {{post.comments[0]?.commentCreator?.name}} </h3>
+                    <p>{{post.comments[0]?.createdAt |date : "medium" }} </p>
+                  </div>
                 </div>
-              </div>
-              <div class="comment__icon relative">
-                @if(userID == post.comments[0].commentCreator._id){
+                <div class="comment__icon relative">
+                  @if(userID == post.comments[0]?.commentCreator?._id){
 
 
 
 
 
-                  <button (click)="toogelIconeMune(iconMune)"  class="text-black " type="button">
-                    <i class="fas fa-ellipsis-h cursor-pointer"></i>
-                    </button>
+                    <button (click)="toogelIconeMune(iconMune)"  class="text-black " type="button">
+                      <i class="fas fa-ellipsis-h cursor-pointer"></i>
+                      </button>
 
-                    <!-- Dropdown menu -->
-                    <div #iconMune  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-6 right-3">
-                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
-                          <li>
-                            <a  role="button" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                          </li>
-                          <li>
-                            <a role="button" (click)="deletePost(post.comments[0]._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
-                          </li>
+                      <!-- Dropdown menu -->
+                      <div #iconMune  class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700 absolute top-6 right-3">
+                          <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDelayButton">
+                            <li>
+                              <a  role="button" (click)="toogelIconeMune(iconMune)" (click)="editComment(post.comments[0]._id , post.comments[0], 0)" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                            </li>
+                            <li>
+                              <a role="button"  (click)="deletePost(post.comments[0]._id)" class="block px-4 py-2 text-red-600 hover:bg-gray-100 ">Delete</a>
+                            </li>
 
-                        </ul>
-                    </div>
+                          </ul>
+                      </div>
 
 
-                }
-              </div>
-             </div>
-             <div class="comment__body ">
-               <p class="text-lg text-gray-500"> {{post.comments[0]?.content }} </p>
-             </div>
-          </div>
+                  }
+                </div>
+               </div>
+               <div class="comment__body ">
+                 <p class="text-lg text-gray-500"> {{post.comments[0]?.content }} </p>
+               </div>
+            </div>
+
         }
+
+
+
 
 
 
@@ -123,10 +131,33 @@
 
 
 
-        <div class="flex items-center gap-3 mt-5 ">
-          <input [(ngModel)]="commentData" type="text" class="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-main" placeholder="Add a comment">
-          <i (click)="postComment(commentData , post._id)" class="fa-solid fa-paper-plane  text-main right-3 text-lg cursor-pointer"></i>
-        </div>
+
+
+@if (isUpdating) {
+  <form [formGroup]="updateForm">
+    <div class="flex items-center gap-3 mt-5 ">
+      <input formControlName="content" type="text" class="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-main" placeholder="Add a comment">
+      @if (isCailngApi) {
+        <i class="fa fa-spin fa-spinner text-main right-3 text-lg"></i>
+      }@else {
+
+        <i (click)="postOrUpdateComment(commentData , post._id)" class="fa-solid fa-paper-plane  text-main right-3 text-lg cursor-pointer"></i>
+      }
+    </div>
+  </form>
+
+}@else {
+  <div class="flex items-center gap-3 mt-5 ">
+    <input [(ngModel)]="commentData" type="text" class="w-full p-2 rounded-lg border-2 border-gray-200 focus:border-main" placeholder="Add a comment">
+    @if (isCailngApi) {
+      <i class="fa fa-spin fa-spinner text-main right-3 text-lg"></i>
+    }@else {
+
+      <i (click)="postOrUpdateComment(commentData , post._id)" class="fa-solid fa-paper-plane  text-main right-3 text-lg cursor-pointer"></i>
+    }
+  </div>
+}
+
 
 
   </div>
