@@ -6,6 +6,7 @@ import { CommentsService } from '../../../services/comments.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RouterLink } from '@angular/router';
+import { PostsService } from '../../../services/Posts/posts.service';
 
 @Component({
   selector: 'app-post',
@@ -21,6 +22,7 @@ export class PostComponent implements OnInit  {
  private readonly  _pLATFORM_ID = inject(PLATFORM_ID)
  private readonly  _authService = inject(AuthService)
  private readonly  _toastrService = inject(ToastrService)
+ private readonly  _postService = inject(PostsService)
 
   @Input({required:true}) post!:IPost;
 
@@ -43,7 +45,7 @@ export class PostComponent implements OnInit  {
 
   }
 
-  // Update Comment
+  // Form Update Comment
   updateForm:FormGroup = new FormGroup({
     content : new FormControl(null)
   })
@@ -127,6 +129,23 @@ postOrUpdateComment(data:string,postID:string){
 
 
 
+  /**
+   * @description
+   * delete post by id
+   * @param id {string} - id of post
+   */
+  deletePost(id:string):void{
+    this._postService.deletePost(id).subscribe({
+      next: (res)=>{
+        console.log(res.post);
+        this._toastrService.success("Post Deleted")
+        setTimeout(() => {
+
+          window.location.reload()
+        }, 500);
+      }
+    })
+  }
 
   /**
    * Toggle the 'hidden' class on the given HTMLElement.

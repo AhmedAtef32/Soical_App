@@ -15,6 +15,7 @@ export const routes: Routes = [
     {path: '' , redirectTo: 'home', pathMatch: 'full'},
     {path: 'home' , loadComponent: ()=> import("./feature/pages/home/home.component").then(c => c.HomeComponent), title: 'Timeline'},
     {path: 'postDetails/:id' , loadComponent: ()=> import("./feature/pages/post-detailes/post-detailes.component").then(c => c.PostDetailesComponent), title: 'Post Details'},
+    {path: 'userPosts/:id' , loadComponent: ()=> import("./feature/pages/user-posts/user-posts.component").then(c => c.UserPostsComponent), title: 'User Posts'},
     {path: '**' , loadComponent: ()=> import("./feature/pages/not-found/not-found.component").then(c => c.NotFoundComponent), title: 'Not Found'},
   ]},
 ];

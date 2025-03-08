@@ -25,4 +25,16 @@ export class PostsService {
   getSinglePost(id:string):Observable<any>{
     return this.httopclinet.get(`${Enviroments.baseUrl}/posts/${id}`)
   }
+
+
+  //get User Posts
+  getUserPosts(id:string):Observable<any>{
+    return this.httopclinet.get(`${Enviroments.baseUrl}/users/${id}/posts`)
+  }
+
+
+  //Delete user Post
+  deletePost(id:string):Observable<any>{
+    return this.httopclinet.delete(`${Enviroments.baseUrl}/posts/${id}`)
+  }
 }
