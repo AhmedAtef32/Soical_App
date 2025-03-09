@@ -29,7 +29,9 @@ ngOnInit(): void {
 
 }
 
-
+/**
+ * @description this function for get user data
+ */
 getUserData(){
   this.authService.getUserData().subscribe({
     next: (res)=>{
@@ -37,8 +39,16 @@ getUserData(){
     }
   });
 }
+
+/**
+ * @description this function for sign out
+ */
  signOut(){
   this.authService.signOut();
 
+}
+
+toogleMenu(list:HTMLElement){
+  list.classList.toggle('hidden')
 }
 }

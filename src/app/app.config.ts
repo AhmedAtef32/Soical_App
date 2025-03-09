@@ -1,6 +1,6 @@
 
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angular/router';
+import { provideRouter, withHashLocation, withInMemoryScrolling, withViewTransitions } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideToastr } from 'ngx-toastr';
 import { routes } from './app.routes';
@@ -11,7 +11,7 @@ import { errorsInterceptor } from './core/interceptor/errors/errors.interceptor'
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }),
-     provideRouter(routes , withViewTransitions() , withInMemoryScrolling({scrollPositionRestoration: 'top'})),
+     provideRouter(routes ,withHashLocation() ,withViewTransitions() , withInMemoryScrolling({scrollPositionRestoration: 'top'})),
       provideClientHydration(withEventReplay()),
       provideHttpClient(withFetch(), withInterceptors([userTokenInterceptor,errorsInterceptor])),
       provideAnimations(),
