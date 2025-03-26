@@ -10,7 +10,7 @@ import { PostsService } from '../../../services/Posts/posts.service';
 
 @Component({
   selector: 'app-post',
-  imports: [DatePipe ,FormsModule , ReactiveFormsModule, RouterLink],
+  imports: [FormsModule , ReactiveFormsModule, RouterLink , DatePipe],
   templateUrl: './post.component.html',
   styleUrl: './post.component.scss'
 })
@@ -25,7 +25,6 @@ export class PostComponent implements OnInit  {
  private readonly  _postService = inject(PostsService)
 
   @Input({required:true}) post!:IPost;
-
   comments!:Comment[]
   showComments:boolean = false
   commentData:string = ''

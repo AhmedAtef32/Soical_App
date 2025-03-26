@@ -4,7 +4,7 @@
       <img class="w-12 h-12 " [src]="post?.user?.photo" alt="profile">
       <div>
         <h3 class="">{{post?.user?.name}} </h3>
-        <h4> {{post?.createdAt | date : "medium"}} </h4>
+        <h4> {{post?.createdAt | date : "full" }} </h4>
       </div>
     </div>
     <div class="post__header__icon relative">
@@ -23,13 +23,14 @@
       }
 
     </div>
+
   </div>
   <div class="post__body mt-5">
     <p class="text-lg"> {{post?.body}} </p>
       <div class="post__img mt-5 cursor-pointer" [routerLink]="['/postDetails/',post._id]" >
         <img class="w-full  object-cover rounded-lg" [src]="post.image ? post?.image : 'images/Route.png'" [alt]="post?.body">
       </div>
-      <a #ShowMore role="button" class="block my-5 text-main"> Show More Comments</a>
+      <a #ShowMore role="button" class="inline-block my-5 text-main"> Show More Comments</a>
       <div  class="post__comments bg-body_color p-4 rounded-lg max-h-[300px]  overflow-y-auto ">
         @defer (on interaction(ShowMore)) {
           @for (comment of post.comments; track $index; let index = $index ) {
@@ -40,7 +41,7 @@
                   <img class="w-10 h-10 rounded-full" src="images/profile.png" alt="profile">
                   <div class="flex gap-3">
                     <h3 class="text-main"> {{comment.commentCreator?.name}} </h3>
-                    <p>{{comment.createdAt |date : "medium" }} </p>
+                    <p>{{comment.createdAt | date : "medium" }} </p>
                   </div>
                 </div>
                 <div class="comment__icon relative">
