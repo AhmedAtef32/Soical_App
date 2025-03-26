@@ -110,7 +110,6 @@ postOrUpdateComment(data:string,postID:string){
   /**
    * @description
    * This function takes an id of comment that will be updated , comment object and index of comment in the comments array of post
-   * and make the comment form ready to update the comment
    * @param id {string} - id of comment
    * @param comment {Comment} - comment object
    * @param index {number} - index of comment in the comments array of post
